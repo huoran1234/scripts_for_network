@@ -11,9 +11,9 @@ def logtofile(arg1,location,status):
         f.close()
         return
 
-BJ_C2811 = {"host": "192.168.63.6",
+BJ_C2811 = {"host": "192.168.0.1",
             "username": "admin",
-            "password": "isgtssL2!",
+            "password": "password",
             "device_type": "cisco_ios",
 }
 
