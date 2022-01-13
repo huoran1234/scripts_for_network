@@ -15,6 +15,7 @@ BJ_C2811 = {"host": "192.168.63.6",
             "username": "admin",
             "password": "password",
             "device_type": "cisco_ios",
+            "fast_cli": False,
 }
 
 Connect = ConnectHandler(**BJ_C2811)
