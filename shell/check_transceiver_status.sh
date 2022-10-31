@@ -45,25 +45,24 @@ do
                 fi
             elif [[ $result_rx == '-36.96' && $result_tx == '-36.96' ]]
             then
-                echo 'Already shutdown.'
-            elif [[ $result_rx == '-36.96' ]]
+                echo 'Already shutdown'
+            elif [[ $result_rx == '-36.96' || $result_tx == '-36.96' ]]
             then
-                echo $line >> result.txt
-                echo 'No Cable ,no device connects or need to shutdown.' >> result.txt
+                echo 'No Cable or no device connects'
             elif [[ $result_tx == '-36.96' ]]
             then
-                echo $line >> result.txt
-                echo 'Attention!!! Please login to device to check the status.' >> result.txt
+                echo $line
+                echo 'Attention!!! Please login to device to check the status.'
             elif [[ $(echo "$result_rx > $rx_high_10g" | bc) -eq 1 || $(echo "$result_rx < $rx_low_10g" | bc) -eq 1 ]]
             then
                 echo $line >> result.txt
-                echo 'Oh shit,rx error,faulty SFP or cable.' >> result.txt
+                echo 'Rx error,faulty SFP or cable.' >> result.txt
             elif [[ $(echo "$result_tx > $tx_high_10g" | bc) -eq 1 || $(echo "$result_tx < $tx_low_10g" | bc) -eq 1 ]]
             then
                 echo $line >> result.txt
-                echo 'Oh shit,tx error,faulty SFP.' >> result.txt
+                echo 'Tx error,faulty SFP.' >> result.txt
             else 
-                echo 'Nice man!'
+                echo 'Good SFP!'
             fi
         elif [[ $(echo $line | grep Twenty-FiveGigE) != "" ]]
         then
@@ -78,29 +77,33 @@ do
                 echo 'No SFP found.'
             elif [[ $(echo $result | grep -a "The transceiver does not support this function") != "" ]]
             then
-                echo $line >> result.txt
-                echo '25G SFP not supported.' >> result.txt
+                if [[ `echo $line | grep "Ten-GigabitEthernet1\/0\/44"` != "" || `echo $line | grep "Ten-GigabitEthernet1\/0\/45"` != "" || `echo $line | grep "Ten-GigabitEthernet1\/0\/46"` != ""  || `echo $line | grep "Ten-GigabitEthernet1\/0\/47"` != "" ]]
+                then
+                    echo $line >> result.txt
+                    echo '25G SFP not supported.' >> result.txt
+                fi
             elif [[ $result_rx == '-36.96' && $result_tx == '-36.96' ]]
             then
-                echo 'Already shutdown.'
-            elif [[ $result_rx == '-36.96' ]]
+                echo $line
+                echo 'Already shutdown'
+            elif [[ $result_rx == '-36.96' || $result_tx == '-36.96' ]]
             then
-                echo $line >> result.txt
-                echo 'No Cable ,no device connects or need to shutdown.' >> result.txt
+                echo $line
+                echo 'No Cable or no device connects'
             elif [[ $result_tx == '-36.96' ]]
             then
-                echo $line >> result.txt
-                echo 'Attention!!!Please login to device to check the status.' >> result.txt
+                echo $line
+                echo 'Attention!!! Please login to device to check the status.'
             elif [[ $(echo "$result_rx > $rx_high_25g" | bc) -eq 1 || $(echo "$result_rx < $rx_low_25g" | bc) -eq 1 ]]
             then
                 echo $line >> result.txt
-                echo 'Oh shit,rx error,faulty SFP or cable.' >> result.txt
+                echo 'Rx error,faulty SFP or cable.' >> result.txt
             elif [[ $(echo "$result_tx > $tx_high_25g" | bc) -eq 1 || $(echo "$result_tx < $tx_low_25g" | bc) -eq 1 ]]
             then
                 echo $line >> result.txt
-                echo 'Oh shit,tx error,faulty SFP.' >> result.txt
+                echo 'Tx error,faulty SFP.' >> result.txt
             else 
-                echo 'Nice man!'
+                echo 'Good SFP!'
             fi
         elif [[ $(echo $line | grep HundredGigE) != "" ]]
         then
@@ -124,25 +127,24 @@ do
                 echo '100G SFP not supported.' >> result.txt
             elif [[ $result_rx1 == '-36.96' && $result_rx2 == '-36.96' && $result_rx3 == '-36.96' && $result_rx4 == '-36.96'  && $result_tx1 == '-36.96'  && $result_tx2 == '-36.96'  && $result_tx3 == '-36.96'  && $result_tx4 == '-36.96' ]]
             then
-                echo 'Already shutdown.'
+                echo 'Already shutdown'
             elif [[ $result_rx1 == '-36.96' && $result_rx2 == '-36.96' && $result_rx3 == '-36.96' && $result_rx4 == '-36.96' ]]
             then
-                echo $line >> result.txt
-                echo 'No Cable ,no device connects or need to shutdown.' >> result.txt
+                echo 'No Cable ,no device connects or need to shutdown'
             elif [[ $result_tx1 == '-36.96' && $result_tx2 == '-36.96' && $result_tx3 == '-36.96' && $result_tx4 == '-36.96' ]]
             then
-                echo $line >> result.txt
-                echo 'Attention!!!Please login to device to check the status.' >> result.txt
+                echo $line
+                echo 'Attention!!!Please login to device to check the status.'
             elif [[ `echo "$result_rx1 > $rx_high_100g" | bc` -eq 1 || `echo "$result_rx1 < $rx_low_100g" | bc` -eq 1 || `echo "$result_rx2 > $rx_high_100g" | bc` -eq 1 || `echo "$result_rx2 < $rx_low_100g" | bc` -eq 1 || `echo "$result_rx3 > $rx_high_100g" | bc` -eq 1 || `echo "$result_rx3 < $rx_low_100g" | bc` -eq 1 || `echo "$result_rx4 > $rx_high_100g" | bc` -eq 1 || `echo "$result_rx4 < $rx_low_100g" | bc` -eq 1 ]]
             then
                 echo $line >> result.txt
-                echo 'Oh shit,rx error,faulty SFP or cable.' >> result.txt
+                echo 'Rx error,faulty SFP or cable.' >> result.txt
             elif [[ `echo "$result_tx1 > $tx_high_100g" | bc` -eq 1 || `echo "$result_tx1 < $tx_low_100g" | bc` -eq 1 || `echo "$result_tx2 > $tx_high_100g" | bc` -eq 1 || `echo "$result_tx2 < $tx_low_100g" | bc` -eq 1 || `echo "$result_tx3 > $tx_high_100g" | bc` -eq 1 || `echo "$result_tx3 < $tx_low_100g" | bc` -eq 1 || `echo "$result_tx4 > $tx_high_100g" | bc` -eq 1 || `echo "$result_tx4 < $tx_low_100g" | bc` -eq 1 ]]
             then
                 echo $line >> result.txt
-                echo 'Oh shit,tx error,faulty SFP.' >> result.txt
+                echo 'Tx error,faulty SFP.' >> result.txt
             else 
-                echo 'Nice man!'
+                echo 'Good SFP!'
             fi
         fi
     done
