@@ -45,10 +45,10 @@ do
                 fi
             elif [[ $result_rx == '-36.96' && $result_tx == '-36.96' ]]
             then
-                echo 'Already shutdown'
+                echo 'Already shutdown.'
             elif [[ $result_rx == '-36.96' || $result_tx == '-36.96' ]]
             then
-                echo 'No Cable or no device connects'
+                echo 'No Cable, no device connected, or shutdown.'
             elif [[ $result_tx == '-36.96' ]]
             then
                 echo $line
@@ -85,11 +85,11 @@ do
             elif [[ $result_rx == '-36.96' && $result_tx == '-36.96' ]]
             then
                 echo $line
-                echo 'Already shutdown'
+                echo 'Already shutdown.'
             elif [[ $result_rx == '-36.96' || $result_tx == '-36.96' ]]
             then
                 echo $line
-                echo 'No Cable or no device connects'
+                echo 'No Cable, no device connected, or shutdown.'
             elif [[ $result_tx == '-36.96' ]]
             then
                 echo $line
@@ -127,10 +127,10 @@ do
                 echo '100G SFP not supported.' >> result.txt
             elif [[ $result_rx1 == '-36.96' && $result_rx2 == '-36.96' && $result_rx3 == '-36.96' && $result_rx4 == '-36.96'  && $result_tx1 == '-36.96'  && $result_tx2 == '-36.96'  && $result_tx3 == '-36.96'  && $result_tx4 == '-36.96' ]]
             then
-                echo 'Already shutdown'
+                echo 'Already shutdown.'
             elif [[ $result_rx1 == '-36.96' && $result_rx2 == '-36.96' && $result_rx3 == '-36.96' && $result_rx4 == '-36.96' ]]
             then
-                echo 'No Cable ,no device connects or need to shutdown'
+                echo 'No Cable ,no device connected or need to shutdown.'
             elif [[ $result_tx1 == '-36.96' && $result_tx2 == '-36.96' && $result_tx3 == '-36.96' && $result_tx4 == '-36.96' ]]
             then
                 echo $line
