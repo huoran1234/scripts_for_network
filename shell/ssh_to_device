@@ -13,8 +13,8 @@ elif [[ $2 == "" ]];then
 	exit 0
 fi
 
-timestamp_start=`date +%Y%m%d%H%M%S%N`
-timestamp=`date +%Y-%m%d-%H%M%S`
+timestamp_start=$(date +%Y%m%d%H%M%S%N)
+timestamp=$(date +%Y-%m%d-%H%M%S)
 mkdir output-"$timestamp"
 
 #定义设备登录用户名和密码
@@ -25,26 +25,28 @@ password="password"
 IFS=$'\n'
 
 #读取第二个输入参数的文件，去掉多余空格后排序
-switch_range=(`awk -F "\t" '{print $1}' $2 | sort | uniq`)
+mapfile -t switch_range < <(awk -F "\t" '{print $1}' "$2" | sort | uniq)
+
 #读取第二个输入参数文件的每行IP地址
-for ip0 in ${switch_range[@]};do {
-	#去掉多余的空格
-   ip0=$(echo $ip0 | sed 's/[ \t]*//g')
+for ip0 in "${switch_range[@]}";do {
+   #去掉多余的空格和制表符
+   ip0=${ip0//[[:blank:]]/}
    (
    echo "screen-length disable"
    #读取第一个输入参数文件中的文本，即需要在设备上执行的命令，并ssh登录到设备上执行后退出
-   for cmd in `cat $1 `;do
-      echo $cmd
-   done    
+   while read -r cmd
+   do
+      echo "$cmd"
+   done < "$1"
    echo "quit";echo "quit"
-   ) | sshpass -p "$password" ssh -tt -o StrictHostKeyChecking=no $username@$ip0  > "output-"$timestamp/$ip0
+   ) | sshpass -p "$password" ssh -tt -o StrictHostKeyChecking=no "$username"@"$ip0"  > "output-""$timestamp"/"$ip0"
 } &
 done
-              
+
 wait
 
-timestamp_end=`date +%Y%m%d%H%M%S%N`
+timestamp_end=$(date +%Y%m%d%H%M%S%N)
 finish_time=$(echo "scale=9; ($timestamp_end-$timestamp_start)/10^9" | bc)
-echo "Finish Time: "$finish_time"s"
+echo "Finish Time: ""$finish_time""s"
 
 exit 0
